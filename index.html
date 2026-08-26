@@ -1,419 +1,173 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HazMind Academy | منصة تعليمية للبحث العلمي والذكاء الاصطناعي</title>
+<meta name="description" content="HazMind Academy منصة تعليمية أكاديمية تقدم دورات وملفات وفيديوهات في البحث العلمي والذكاء الاصطناعي والتقنية.">
+<meta name="keywords" content="HazMind Academy, البحث العلمي, الذكاء الاصطناعي, دورات تعليمية, ملفات تعليمية, تقنية">
+<meta name="author" content="HazMind Academy">
 
-    <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="HazMind Academy - منصة تعليمية للبحث العلمي والذكاء الاصطناعي">
-
-    <title>HazMind Academy</title>
-
-    <link rel="stylesheet" href="style.css">
-
+<link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
 
-
-<!-- =========================
-     Header
-========================= -->
-
-<header class="header">
-
-    <div class="container nav">
-
-        <a href="#" class="logo">
-            HazMind <span>Academy</span>
+<!-- ============ Header ============ -->
+<header class="site-header" id="top">
+    <div class="header-inner container">
+        <a href="#top" class="brand" aria-label="HazMind Academy — الرئيسية">
+            <span class="brand-mark" aria-hidden="true">HM</span>
+            <span class="brand-name"><span class="brand-white">Hazmind</span><span class="brand-gold">Academy</span></span>
         </a>
 
-
-        <nav>
-
-            <a href="#home">الرئيسية</a>
-
+        <nav class="main-nav" aria-label="التنقل الرئيسي">
+            <a href="#top">الرئيسية</a>
             <a href="#courses">الدورات</a>
-
-            <a href="#files">الملفات</a>
-
+            <a href="#resources">الموارد</a>
             <a href="#videos">الفيديوهات</a>
-
             <a href="#contact">تواصل معنا</a>
-
         </nav>
 
+        <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileMenu">
+            <span></span><span></span><span></span>
+        </button>
     </div>
 
+    <nav class="mobile-nav" id="mobileMenu" aria-label="التنقل على الهاتف">
+        <a href="#top">الرئيسية</a>
+        <a href="#courses">الدورات</a>
+        <a href="#resources">الموارد</a>
+        <a href="#videos">الفيديوهات</a>
+        <a href="#contact">تواصل معنا</a>
+    </nav>
 </header>
 
+<main>
 
-
-<!-- =========================
-     Hero
-========================= -->
-
-<section class="hero" id="home">
-
-    <div class="container">
-
-        <div class="hero-content">
-
-            <div>
-
-                <div class="badge">
-                    HazMind Academy
-                </div>
-
-
-                <h1>
-
-                    المعرفة تبدأ من
-                    <span>هنا</span>
-
-                </h1>
-
-
-                <p>
-
-                    منصة تعليمية تهدف إلى تقديم المعرفة والمهارات
-                    في البحث العلمي والذكاء الاصطناعي والتقنية
-                    بطريقة واضحة وعملية.
-
-                </p>
-
-
-                <div class="hero-buttons">
-
-                    <a href="#courses" class="btn primary">
-                        استكشف الدورات
-                    </a>
-
-
-                    <a href="#files" class="btn secondary">
-                        الملفات التعليمية
-                    </a>
-
-                </div>
-
-            </div>
-
+    <!-- ============ Hero ============ -->
+    <section class="hero">
+        <div class="hero-bg" aria-hidden="true">
+            <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+                <line x1="0" y1="120" x2="1200" y2="120" class="hero-line"/>
+                <line x1="0" y1="380" x2="1200" y2="380" class="hero-line"/>
+                <line x1="0" y1="640" x2="1200" y2="640" class="hero-line"/>
+                <line x1="200" y1="0" x2="200" y2="800" class="hero-line-v"/>
+                <line x1="1000" y1="0" x2="1000" y2="800" class="hero-line-v"/>
+            </svg>
         </div>
 
-    </div>
-
-</section>
-
-
-
-<!-- =========================
-     Features
-========================= -->
-
-<section class="section">
-
-    <div class="container">
-
-        <div class="section-title">
-
-            <span>
-                لماذا HazMind Academy؟
-            </span>
-
-            <h2>
-                تعلم بطريقة أبسط
-            </h2>
-
-            <p>
-                محتوى تعليمي منظم يساعدك على تطوير معرفتك ومهاراتك.
+        <div class="container hero-inner">
+            <span class="eyebrow">منصّة تعليمية أكاديمية</span>
+            <h1 class="hero-title">المعرفة تبدأ <span class="text-gold">من هنا</span></h1>
+            <p class="hero-desc">
+                منصة تعليمية تهدف إلى تقديم المعرفة والمهارات في
+                البحث العلمي، والذكاء الاصطناعي، والتقنية —
+                بأسلوب واضح وعملي يواكب احتياجات الباحث والمتعلم العربي.
             </p>
-
+            <div class="hero-actions">
+                <a href="#courses" class="btn btn-primary">استكشف الدورات</a>
+                <a href="#resources" class="btn btn-secondary">الموارد التعليمية</a>
+            </div>
         </div>
+    </section>
 
-
-        <div class="features">
-
-
-            <div class="feature-card">
-
-                <div class="icon">
-                    01
-                </div>
-
-                <h3>
-                    البحث العلمي
-                </h3>
-
-                <p>
-                    محتوى يساعدك على فهم خطوات البحث العلمي
-                    وإعداد الأبحاث والخطط البحثية.
-                </p>
-
+    <!-- ============ Why HazMind ============ -->
+    <section class="why">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-kicker">لماذا</span>
+                <h2>لماذا <span class="text-gold">HazMind Academy؟</span></h2>
             </div>
 
+            <div class="why-grid">
+                <article class="why-card">
+                    <div class="why-icon" aria-hidden="true">◆</div>
+                    <h3>البحث العلمي</h3>
+                    <p>محتوى يساعد الباحثين والطلاب على فهم البحث العلمي وتطبيقه بخطوات عملية وواضحة.</p>
+                </article>
 
+                <article class="why-card">
+                    <div class="why-icon" aria-hidden="true">◆</div>
+                    <h3>الذكاء الاصطناعي</h3>
+                    <p>استخدام أدوات الذكاء الاصطناعي بطريقة عملية وأخلاقية تخدم البحث والتعلّم.</p>
+                </article>
 
-            <div class="feature-card">
+                <article class="why-card">
+                    <div class="why-icon" aria-hidden="true">◆</div>
+                    <h3>محتوى عملي</h3>
+                    <p>ملفات وفيديوهات ومواد تعليمية منظمة وقابلة للوصول بسهولة في أي وقت.</p>
+                </article>
+            </div>
+        </div>
+    </section>
 
-                <div class="icon">
-                    02
-                </div>
-
-                <h3>
-                    الذكاء الاصطناعي
-                </h3>
-
-                <p>
-                    تعلم استخدام أدوات الذكاء الاصطناعي
-                    بطريقة عملية في التعليم والبحث العلمي.
-                </p>
-
+    <!-- ============ Courses ============ -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-kicker">المسار التعليمي</span>
+                <h2>الدورات <span class="text-gold">التعليمية</span></h2>
+                <p class="section-sub">دورات مصممة لبناء أساس معرفي متين، خطوة بخطوة.</p>
             </div>
 
+            <div id="courses-container" class="courses-grid"></div>
+        </div>
+    </section>
 
-
-            <div class="feature-card">
-
-                <div class="icon">
-                    03
-                </div>
-
-                <h3>
-                    محتوى عملي
-                </h3>
-
-                <p>
-                    ملفات وفيديوهات ومواد تعليمية يمكنك
-                    الوصول إليها والاستفادة منها بسهولة.
-                </p>
-
+    <!-- ============ Resources / Files ============ -->
+    <section class="resources" id="resources">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-kicker">مكتبة الموارد</span>
+                <h2>الموارد <span class="text-gold">التعليمية</span></h2>
+                <p class="section-sub">ملفات وكتب وملخصات تعليمية متاحة للتحميل.</p>
             </div>
 
-
+            <div id="files-container" class="files-grid"></div>
         </div>
+    </section>
 
-    </div>
-
-</section>
-
-
-
-<!-- =========================
-     Courses
-========================= -->
-
-<section class="section dark-section" id="courses">
-
-    <div class="container">
-
-        <div class="section-title">
-
-            <span>
-                COURSES
-            </span>
-
-            <h2>
-                الدورات التعليمية
-            </h2>
-
-            <p>
-                اختر الدورة التي تناسب اهتمامك وابدأ رحلة التعلم.
-            </p>
-
-        </div>
-
-
-        <div
-            class="courses"
-            id="courses-container">
-
-            <div class="loading">
-                جاري تحميل الدورات...
+    <!-- ============ Videos ============ -->
+    <section class="videos" id="videos">
+        <div class="container">
+            <div class="section-head">
+                <span class="section-kicker">شاهد وتعلّم</span>
+                <h2>فيديوهات <span class="text-gold">YouTube</span></h2>
+                <p class="section-sub">شروحات مرئية مختارة لتبسيط المفاهيم.</p>
             </div>
 
+            <div id="videos-container" class="videos-grid"></div>
         </div>
+    </section>
 
-    </div>
-
-</section>
-
-
-
-<!-- =========================
-     Files
-========================= -->
-
-<section class="section" id="files">
-
-    <div class="container">
-
-        <div class="section-title">
-
-            <span>
-                RESOURCES
-            </span>
-
-            <h2>
-                الموارد
-            </h2>
-
-            <p>
-                الملفات التعليمية والكتب والملخصات المتاحة للتحميل.
-            </p>
-
-        </div>
-
-
-        <div
-            class="content-grid"
-            id="files-container">
-
-            <div class="loading">
-                جاري تحميل الملفات...
+    <!-- ============ Contact ============ -->
+    <section class="contact" id="contact">
+        <div class="container contact-inner">
+            <div class="section-head">
+                <span class="section-kicker">ابقَ على تواصل</span>
+                <h2>تواصل <span class="text-gold">معنا</span></h2>
+                <p class="section-sub">تابع آخر الدورات والفيديوهات والملفات التعليمية عبر قنواتنا.</p>
             </div>
 
+            <div id="social-container" class="social-links"></div>
         </div>
+    </section>
 
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <span class="brand-name footer-brand"><span class="brand-white">Hazmind</span><span class="brand-gold">Academy</span></span>
+        <p>© <span id="year"></span> HazMind Academy — جميع الحقوق محفوظة</p>
     </div>
-
-</section>
-
-
-
-<!-- =========================
-     Videos
-========================= -->
-
-<section class="section dark-section" id="videos">
-
-    <div class="container">
-
-        <div class="section-title">
-
-            <span>
-                VIDEOS
-            </span>
-
-            <h2>
-                الفيديوهات التعليمية
-            </h2>
-
-            <p>
-                شاهد المحتوى التعليمي مباشرة من YouTube.
-            </p>
-
-        </div>
-
-
-        <div
-            class="video-grid"
-            id="videos-container">
-
-            <div class="loading">
-                جاري تحميل الفيديوهات...
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================
-     Contact
-========================= -->
-
-<section class="section contact-section" id="contact">
-
-    <div class="container">
-
-        <div class="section-title">
-
-            <span>
-                CONTACT
-            </span>
-
-            <h2>
-                تابعنا
-            </h2>
-
-            <p>
-                تابع HazMind Academy للحصول على أحدث المحتوى التعليمي.
-            </p>
-
-        </div>
-
-
-        <div class="social-links">
-
-
-            <a
-                id="youtube-link"
-                class="social"
-                href="#"
-                target="_blank">
-
-                YouTube
-
-            </a>
-
-
-            <a
-                id="facebook-link"
-                class="social"
-                href="#"
-                target="_blank">
-
-                Facebook
-
-            </a>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================
-     Footer
-========================= -->
-
-<footer>
-
-    <div class="container footer-content">
-
-        <div>
-            © <span id="year"></span> HazMind Academy
-        </div>
-
-        <div>
-            جميع الحقوق محفوظة
-        </div>
-
-    </div>
-
 </footer>
 
-
-
-<!-- =========================
-     JavaScript
-========================= -->
-
 <script src="content.js"></script>
-
 <script src="script.js"></script>
-
-
 </body>
-
 </html>
