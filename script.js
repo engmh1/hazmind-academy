@@ -130,17 +130,15 @@ function renderFiles() {
                     </p>
 
 
-                    <a
-                        href="${file.file}"
-                        class="download-btn"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        download>
-
-                        تحميل الملف
-
-                    </a>
-
+                 <a
+    href="files/${encodeURIComponent(file.file)}"
+    class="download-btn"
+    target="_blank"
+    rel="noopener"
+    download
+>
+    تحميل الملف
+</a>
 
                 </div>
 
