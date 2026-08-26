@@ -1,110 +1,80 @@
+/* =====================================================
+   HazMind Academy
+   Script
+===================================================== */
+
 document.addEventListener("DOMContentLoaded", function () {
 
-
     /* =========================
-       السنة
-    ========================== */
+       الدورات
+    ========================= */
 
-    const year = document.getElementById("year");
-
-    if (year) {
-        year.textContent = new Date().getFullYear();
-    }
-
-
-    /* =========================
-       عرض الدورات
-    ========================== */
-
-    const coursesContainer =
-        document.getElementById("courses-container");
-
+    const coursesContainer = document.getElementById("courses-container");
 
     if (coursesContainer) {
 
         coursesContainer.innerHTML = "";
 
+        courses.forEach(function (course) {
 
-        if (courses.length === 0) {
+            const card = document.createElement("div");
 
-            coursesContainer.innerHTML = `
-                <div class="loading">
-                    لا توجد دورات متاحة حاليًا.
-                </div>
-            `;
+            card.className = "course-card";
 
-        } else {
+            let buttonHTML = "";
 
-            courses.forEach(function (course) {
+            if (course.link) {
 
-                let action = "";
-
-                if (course.link && course.link.trim() !== "") {
-
-                    action = `
-                        <a
-                            href="${course.link}"
-                            target="_blank"
-                            rel="noopener"
-                            class="btn primary">
-
-                            ${course.button || "الدخول إلى الدورة"}
-
-                        </a>
-                    `;
-
-                } else {
-
-                    action = `
-                        <span class="course-status">
-                            ${course.button || "قريبًا"}
-                        </span>
-                    `;
-
-                }
-
-
-                coursesContainer.innerHTML += `
-
-                    <div class="course-card">
-
-                        <div class="course-number">
-                            ${course.number}
-                        </div>
-
-                        <h3>
-                            ${course.title}
-                        </h3>
-
-                        <p>
-                            ${course.description}
-                        </p>
-
-                        ${action}
-
-                    </div>
-
+                buttonHTML = `
+                    <a href="${course.link}"
+                       class="btn primary"
+                       target="_blank">
+                        ${course.button || "الدخول إلى الدورة"}
+                    </a>
                 `;
 
-            });
+            } else {
 
-        }
+                buttonHTML = `
+                    <span class="course-status">
+                        ${course.button || "قريبًا"}
+                    </span>
+                `;
+
+            }
+
+            card.innerHTML = `
+                <div class="course-number">
+                    ${course.number}
+                </div>
+
+                <h3>
+                    ${course.title}
+                </h3>
+
+                <p>
+                    ${course.description}
+                </p>
+
+                ${buttonHTML}
+            `;
+
+            coursesContainer.appendChild(card);
+
+        });
 
     }
 
 
     /* =========================
-       عرض ملفات PDF
-    ========================== */
+       ملفات PDF
+    ========================= */
 
-    const filesContainer =
-        document.getElementById("files-container");
-
+    const filesContainer = document.getElementById("files-container");
 
     if (filesContainer) {
 
         filesContainer.innerHTML = "";
-
 
         if (files.length === 0) {
 
@@ -118,31 +88,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
             files.forEach(function (item) {
 
-                filesContainer.innerHTML += `
+                const card = document.createElement("div");
 
-                    <div class="file-card">
+                card.className = "file-card";
 
-                        <h3>
-                            ${item.title}
-                        </h3>
-
-                        <p>
-                            ${item.description}
-                        </p>
-
-                        <a
-                            href="${item.file}"
-                            target="_blank"
-                            rel="noopener"
-                            class="download-btn">
-
-                            تحميل PDF
-
-                        </a>
-
+                card.innerHTML = `
+                    <div class="icon">
+                        PDF
                     </div>
 
+                    <h3>
+                        ${item.title}
+                    </h3>
+
+                    <p>
+                        ${item.description}
+                    </p>
+
+                    <a href="${item.file}"
+                       class="download-btn"
+                       target="_blank">
+                        فتح الملف
+                    </a>
                 `;
+
+                filesContainer.appendChild(card);
 
             });
 
@@ -152,65 +122,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================
-       تحويل رابط YouTube
-       إلى رابط Embed
-    ========================== */
+       فيديوهات YouTube
+    ========================= */
 
-    function getYouTubeEmbedUrl(url) {
-
-        try {
-
-            const parsedUrl = new URL(url);
-
-            let videoId = "";
-
-
-            /* youtube.com/watch?v= */
-
-            if (parsedUrl.hostname.includes("youtube.com")) {
-
-                videoId = parsedUrl.searchParams.get("v");
-
-            }
-
-
-            /* youtu.be/ */
-
-            if (parsedUrl.hostname === "youtu.be") {
-
-                videoId = parsedUrl.pathname.substring(1);
-
-            }
-
-
-            if (!videoId) {
-                return "";
-            }
-
-
-            return "https://www.youtube.com/embed/" + videoId;
-
-        } catch (error) {
-
-            return "";
-
-        }
-
-    }
-
-
-    /* =========================
-       عرض فيديوهات YouTube
-    ========================== */
-
-    const videosContainer =
-        document.getElementById("videos-container");
-
+    const videosContainer = document.getElementById("videos-container");
 
     if (videosContainer) {
 
         videosContainer.innerHTML = "";
-
 
         if (videos.length === 0) {
 
@@ -224,45 +143,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
             videos.forEach(function (video) {
 
-                const embedUrl =
-                    getYouTubeEmbedUrl(video.youtube);
+                const videoId = getYouTubeID(video.youtube);
 
-
-                if (!embedUrl) {
+                if (!videoId) {
                     return;
                 }
 
+                const card = document.createElement("div");
 
-                videosContainer.innerHTML += `
+                card.className = "video-card";
 
-                    <div class="video-card">
+                card.innerHTML = `
 
-                        <div class="video-frame">
+                    <div class="video-frame">
 
-                            <iframe
-                                src="${embedUrl}"
-                                title="${video.title}"
-                                loading="lazy"
-                                allowfullscreen>
-                            </iframe>
-
-                        </div>
-
-                        <div class="video-info">
-
-                            <h3>
-                                ${video.title}
-                            </h3>
-
-                            <p>
-                                ${video.description}
-                            </p>
-
-                        </div>
+                        <iframe
+                            src="https://www.youtube.com/embed/${videoId}"
+                            title="${video.title}"
+                            allowfullscreen>
+                        </iframe>
 
                     </div>
 
+                    <div class="video-info">
+
+                        <h3>
+                            ${video.title}
+                        </h3>
+
+                        <p>
+                            ${video.description}
+                        </p>
+
+                    </div>
                 `;
+
+                videosContainer.appendChild(card);
 
             });
 
@@ -270,4 +186,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+
+    /* =========================
+       روابط التواصل
+    ========================= */
+
+    const youtubeLink = document.getElementById("youtube-link");
+
+    if (youtubeLink && socialLinks.youtube) {
+        youtubeLink.href = socialLinks.youtube;
+    }
+
+
+    const facebookLink = document.getElementById("facebook-link");
+
+    if (facebookLink && socialLinks.facebook) {
+        facebookLink.href = socialLinks.facebook;
+    }
+
 });
+
+
+/* =====================================================
+   استخراج ID فيديو YouTube
+===================================================== */
+
+function getYouTubeID(url) {
+
+    if (!url) {
+        return null;
+    }
+
+    try {
+
+        const parsedURL = new URL(url);
+
+        if (parsedURL.hostname.includes("youtu.be")) {
+
+            return parsedURL.pathname.substring(1);
+
+        }
+
+        if (parsedURL.hostname.includes("youtube.com")) {
+
+            return parsedURL.searchParams.get("v");
+
+        }
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+    return null;
+}
