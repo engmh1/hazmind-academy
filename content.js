@@ -89,7 +89,7 @@ const videos = [
     {
         title: "حدود الدراســـــة",
         description: "اشرح مفصل لحـــدود الدراسة,
-        youtube: "https://youtu.be/JVE10Jy3ek8"
+        youtube: "https://www.youtube.com/watch?v=H-O6H_Da6m8&list=RDH-O6H_Da6m8&index=1&pp=8AUB"
     }
 ];
 
