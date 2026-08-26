@@ -91,7 +91,7 @@ function renderFiles() {
                 </p>
 
                 <a
-                    href="${file.file}"
+                    href="files/${encodeURIComponent(file.file)}"
                     class="download-btn"
                     target="_blank"
                     download
