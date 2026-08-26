@@ -29,7 +29,6 @@ function renderCourses() {
             : `<span class="course-status">${course.button || "قريبًا"}</span>`;
 
         return `
-
             <div class="course-card">
 
                 <div class="course-number">
@@ -47,7 +46,6 @@ function renderCourses() {
                 ${button}
 
             </div>
-
         `;
 
     }).join("");
@@ -75,7 +73,6 @@ function renderFiles() {
     container.innerHTML = files.map(file => {
 
         return `
-
             <div class="file-card">
 
                 <div class="icon">
@@ -91,16 +88,15 @@ function renderFiles() {
                 </p>
 
                 <a
-                    href="files/${encodeURIComponent(file.file)}"
+                    href="${encodeURI(file.file)}"
                     class="download-btn"
                     target="_blank"
-                    download
+                    rel="noopener"
                 >
                     تحميل الملف
                 </a>
 
             </div>
-
         `;
 
     }).join("");
@@ -178,7 +174,6 @@ function renderVideos() {
         if (!videoId) {
 
             return `
-
                 <div class="video-card">
 
                     <div class="video-info">
@@ -194,12 +189,10 @@ function renderVideos() {
                     </div>
 
                 </div>
-
             `;
         }
 
         return `
-
             <div class="video-card">
 
                 <div class="video-frame">
@@ -226,7 +219,6 @@ function renderVideos() {
                 </div>
 
             </div>
-
         `;
 
     }).join("");
