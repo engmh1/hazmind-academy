@@ -1,1 +1,18 @@
-
+{
+  "files": [
+    {
+      "id": 1,
+      "title": "دليل البحث العلمي",
+      "description": "دليل مجاني للباحثين",
+      "url": "files/research-guide.pdf"
+    }
+  ],
+  "videos": [
+    {
+      "id": 1,
+      "title": "البحث العلمي من الصفر",
+      "description": "شرح مبسط لخطوات إعداد البحث العلمي",
+      "youtube": "https://www.youtube.com/watch?v=VIDEO_ID"
+    }
+  ]
+}
