@@ -65,7 +65,7 @@ const files = [
     // {
     //     title: "ملخص البحث العلمي",
     //     description: "ملخص شامل لخطوات البحث العلمي.",
-    //     file: "ملخص البحث العلمي.pdf"
+    //     file: "summary.pdf"
     // }
 ];
 
