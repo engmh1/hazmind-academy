@@ -44,9 +44,9 @@ const files = [
     },
 
     {
-        title: "ملخص الأسبوعين",
-        description: "دليل شامل لاستخدام الذكاء الاصطناعي في البحث العلمي.",
-        file: "summary2.pdf"
+      title: "ملخص البحث العلمي",
+        description: "ملخص شامل لخطوات البحث العلمي.",
+        file: "files/summary.pdf"
     }
 
 ];
