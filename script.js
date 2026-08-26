@@ -1,49 +1,37 @@
 /* =====================================================
    HazMind Academy
-   Script
+   تشغيل محتوى الموقع
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
 
-    /* =========================
-       الدورات
-    ========================= */
+/* =========================
+   عرض الدورات
+========================= */
 
-    const coursesContainer = document.getElementById("courses-container");
+function renderCourses() {
 
-    if (coursesContainer) {
+    const container = document.getElementById("courses-container");
 
-        coursesContainer.innerHTML = "";
+    if (!container) return;
 
-        courses.forEach(function (course) {
+    if (!courses || courses.length === 0) {
 
-            const card = document.createElement("div");
+        container.innerHTML =
+            '<div class="loading">لا توجد دورات متاحة حاليًا.</div>';
 
-            card.className = "course-card";
+        return;
+    }
 
-            let buttonHTML = "";
+    container.innerHTML = courses.map(course => {
 
-            if (course.link) {
+        const button = course.link
+            ? `<a href="${course.link}" class="btn primary" target="_blank">${course.button || "الدخول إلى الدورة"}</a>`
+            : `<span class="course-status">${course.button || "قريبًا"}</span>`;
 
-                buttonHTML = `
-                    <a href="${course.link}"
-                       class="btn primary"
-                       target="_blank">
-                        ${course.button || "الدخول إلى الدورة"}
-                    </a>
-                `;
+        return `
 
-            } else {
+            <div class="course-card">
 
-                buttonHTML = `
-                    <span class="course-status">
-                        ${course.button || "قريبًا"}
-                    </span>
-                `;
-
-            }
-
-            card.innerHTML = `
                 <div class="course-number">
                     ${course.number}
                 </div>
@@ -56,114 +44,142 @@ document.addEventListener("DOMContentLoaded", function () {
                     ${course.description}
                 </p>
 
-                ${buttonHTML}
-            `;
+                ${button}
 
-            coursesContainer.appendChild(card);
+            </div>
 
-        });
+        `;
 
+    }).join("");
+}
+
+
+/* =========================
+   عرض ملفات PDF
+========================= */
+
+function renderFiles() {
+
+    const container = document.getElementById("files-container");
+
+    if (!container) return;
+
+    if (!files || files.length === 0) {
+
+        container.innerHTML =
+            '<div class="loading">لا توجد ملفات متاحة حاليًا.</div>';
+
+        return;
     }
 
+    container.innerHTML = files.map(file => {
 
-    /* =========================
-       ملفات PDF
-    ========================= */
+        return `
 
-    const filesContainer = document.getElementById("files-container");
+            <div class="file-card">
 
-    if (filesContainer) {
-
-        filesContainer.innerHTML = "";
-
-        if (files.length === 0) {
-
-            filesContainer.innerHTML = `
-                <div class="loading">
-                    لا توجد ملفات متاحة حاليًا.
+                <div class="icon">
+                    PDF
                 </div>
-            `;
 
-        } else {
+                <h3>
+                    ${file.title}
+                </h3>
 
-            files.forEach(function (item) {
+                <p>
+                    ${file.description}
+                </p>
 
-                const card = document.createElement("div");
+                <a
+                    href="${file.file}"
+                    class="download-btn"
+                    target="_blank"
+                    download
+                >
+                    تحميل الملف
+                </a>
 
-                card.className = "file-card";
+            </div>
 
-                card.innerHTML = `
-                    <div class="icon">
-                        PDF
-                    </div>
+        `;
 
-                    <h3>
-                        ${item.title}
-                    </h3>
+    }).join("");
+}
 
-                    <p>
-                        ${item.description}
-                    </p>
 
-                    <a href="${item.file}"
-                       class="download-btn"
-                       target="_blank">
-                        فتح الملف
-                    </a>
-                `;
+/* =========================
+   استخراج YouTube ID
+========================= */
 
-                filesContainer.appendChild(card);
+function getYouTubeID(url) {
 
-            });
+    if (!url) return "";
+
+    let videoId = "";
+
+    try {
+
+        const parsed = new URL(url);
+
+        if (parsed.hostname.includes("youtu.be")) {
+
+            videoId = parsed.pathname.substring(1);
+
+        } else if (parsed.hostname.includes("youtube.com")) {
+
+            videoId = parsed.searchParams.get("v") || "";
+
+            if (!videoId && parsed.pathname.includes("/shorts/")) {
+
+                videoId = parsed.pathname.split("/shorts/")[1];
+
+            }
+
+            if (!videoId && parsed.pathname.includes("/embed/")) {
+
+                videoId = parsed.pathname.split("/embed/")[1];
+
+            }
 
         }
 
+    } catch (error) {
+
+        console.log("رابط YouTube غير صالح");
+
     }
 
+    return videoId;
+}
 
-    /* =========================
-       فيديوهات YouTube
-    ========================= */
 
-    const videosContainer = document.getElementById("videos-container");
+/* =========================
+   عرض فيديوهات YouTube
+========================= */
 
-    if (videosContainer) {
+function renderVideos() {
 
-        videosContainer.innerHTML = "";
+    const container = document.getElementById("videos-container");
 
-        if (videos.length === 0) {
+    if (!container) return;
 
-            videosContainer.innerHTML = `
-                <div class="loading">
-                    لا توجد فيديوهات متاحة حاليًا.
-                </div>
-            `;
+    if (!videos || videos.length === 0) {
 
-        } else {
+        container.innerHTML =
+            '<div class="loading">لا توجد فيديوهات متاحة حاليًا.</div>';
 
-            videos.forEach(function (video) {
+        return;
+    }
 
-                const videoId = getYouTubeID(video.youtube);
+    container.innerHTML = videos.map(video => {
 
-                if (!videoId) {
-                    return;
-                }
+        const videoId = getYouTubeID(video.youtube);
 
-                const card = document.createElement("div");
+        if (!videoId) {
 
-                card.className = "video-card";
+            return `
 
-                card.innerHTML = `
-
-                    <div class="video-frame">
-
-                        <iframe
-                            src="https://www.youtube.com/embed/${videoId}"
-                            title="${video.title}"
-                            allowfullscreen>
-                        </iframe>
-
-                    </div>
+                <div class="video-card">
 
                     <div class="video-info">
 
@@ -172,72 +188,87 @@ document.addEventListener("DOMContentLoaded", function () {
                         </h3>
 
                         <p>
-                            ${video.description}
+                            رابط الفيديو غير صالح.
                         </p>
 
                     </div>
-                `;
 
-                videosContainer.appendChild(card);
+                </div>
 
-            });
-
+            `;
         }
 
+        return `
+
+            <div class="video-card">
+
+                <div class="video-frame">
+
+                    <iframe
+                        src="https://www.youtube.com/embed/${videoId}"
+                        title="${video.title}"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+                <div class="video-info">
+
+                    <h3>
+                        ${video.title}
+                    </h3>
+
+                    <p>
+                        ${video.description}
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }).join("");
+}
+
+
+/* =========================
+   الروابط الاجتماعية
+========================= */
+
+function renderSocialLinks() {
+
+    const youtube = document.getElementById("youtube-link");
+
+    const facebook = document.getElementById("facebook-link");
+
+    if (youtube && socialLinks.youtube) {
+
+        youtube.href = socialLinks.youtube;
+
     }
 
+    if (facebook && socialLinks.facebook) {
 
-    /* =========================
-       روابط التواصل
-    ========================= */
+        facebook.href = socialLinks.facebook;
 
-    const youtubeLink = document.getElementById("youtube-link");
-
-    if (youtubeLink && socialLinks.youtube) {
-        youtubeLink.href = socialLinks.youtube;
     }
+}
 
 
-    const facebookLink = document.getElementById("facebook-link");
+/* =========================
+   تشغيل الموقع
+========================= */
 
-    if (facebookLink && socialLinks.facebook) {
-        facebookLink.href = socialLinks.facebook;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+
+    renderCourses();
+
+    renderFiles();
+
+    renderVideos();
+
+    renderSocialLinks();
 
 });
-
-
-/* =====================================================
-   استخراج ID فيديو YouTube
-===================================================== */
-
-function getYouTubeID(url) {
-
-    if (!url) {
-        return null;
-    }
-
-    try {
-
-        const parsedURL = new URL(url);
-
-        if (parsedURL.hostname.includes("youtu.be")) {
-
-            return parsedURL.pathname.substring(1);
-
-        }
-
-        if (parsedURL.hostname.includes("youtube.com")) {
-
-            return parsedURL.searchParams.get("v");
-
-        }
-
-    } catch (error) {
-
-        return null;
-
-    }
-
-    return null;
-}
