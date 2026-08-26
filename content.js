@@ -87,9 +87,9 @@ const files = [
 ------------------------------------------------------------------------- */
 const videos = [
     {
-        title: "عنوان الفيديو التجريبي",
-        description: "استبدل هذا العنصر برابط فيديوك الحقيقي من قناتك.",
-        youtube: "https://www.youtube.com/watch?v=jNQXAC9IVRw"
+        title: "حدود الدراســـــة",
+        description: "اشرح مفصل لحـــدود الدراسة,
+        youtube: "https://youtu.be/JVE10Jy3ek8"
     }
 ];
 
