@@ -130,11 +130,10 @@ function renderFiles() {
                     </p>
 
 
-                 <a
-    href="files/${encodeURIComponent(file.file)}"
+               <a
+    href="${file.file}"
     class="download-btn"
     target="_blank"
-    rel="noopener"
     download
 >
     تحميل الملف
