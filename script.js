@@ -238,12 +238,9 @@ function getYouTubeID(url) {
 
 function renderVideos() {
 
-    const container =
-        document.getElementById("videos-container");
-
+    const container = document.getElementById("videos-container");
 
     if (!container) return;
-
 
     if (!videos || videos.length === 0) {
 
@@ -253,91 +250,51 @@ function renderVideos() {
         return;
     }
 
+    container.innerHTML = videos.map(video => {
 
-    container.innerHTML =
-        videos.map(video => {
+        let videoId = "";
 
+        if (video.youtube.includes("youtu.be/")) {
 
-            const videoId =
-                getYouTubeID(video.youtube);
+            videoId = video.youtube
+                .split("youtu.be/")[1]
+                .split("?")[0]
+                .split("&")[0];
 
+        } else if (video.youtube.includes("watch?v=")) {
 
-            if (!videoId) {
+            videoId = video.youtube
+                .split("watch?v=")[1]
+                .split("&")[0];
 
-                return `
+        }
 
-                    <div class="video-card">
+        return `
+            <div class="video-card">
 
-                        <div class="video-info">
+                <div class="video-frame">
 
-                            <h3>
-                                ${video.title}
-                            </h3>
-
-                            <p>
-                                رابط الفيديو غير صالح.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-
-
-            return `
-
-                <div class="video-card">
-
-
-                    <div class="video-frame">
-
-                        <iframe
-
-                            src="https://www.youtube.com/embed/${videoId}"
-
-                            title="${video.title}"
-
-                            loading="lazy"
-
-                            allow="
-                                accelerometer;
-                                autoplay;
-                                clipboard-write;
-                                encrypted-media;
-                                gyroscope;
-                                picture-in-picture;
-                                web-share
-                            "
-
-                            allowfullscreen>
-
-                        </iframe>
-
-                    </div>
-
-
-                    <div class="video-info">
-
-                        <h3>
-                            ${video.title}
-                        </h3>
-
-
-                        <p>
-                            ${video.description}
-                        </p>
-
-                    </div>
-
+                    <iframe
+                        src="https://www.youtube.com/embed/${videoId}"
+                        title="${video.title}"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
 
                 </div>
 
-            `;
+                <div class="video-info">
 
-        }).join("");
+                    <h3>${video.title}</h3>
+
+                    <p>${video.description}</p>
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
 
 }
 
