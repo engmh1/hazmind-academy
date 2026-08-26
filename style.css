@@ -26,13 +26,13 @@ a {
 }
 
 
-/* Header */
+/* ================= HEADER ================= */
 
 .header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255,255,255,0.96);
+    background: rgba(255, 255, 255, 0.96);
     border-bottom: 1px solid #e8ebf0;
 }
 
@@ -71,7 +71,7 @@ nav a:hover {
 }
 
 
-/* Hero */
+/* ================= HERO ================= */
 
 .hero {
     min-height: 650px;
@@ -154,7 +154,7 @@ nav a:hover {
 }
 
 
-/* Sections */
+/* ================= SECTIONS ================= */
 
 .section {
     padding: 90px 0;
@@ -186,7 +186,7 @@ nav a:hover {
 }
 
 
-/* Features */
+/* ================= FEATURES ================= */
 
 .features {
     display: grid;
@@ -229,7 +229,7 @@ nav a:hover {
 }
 
 
-/* Courses */
+/* ================= COURSES ================= */
 
 .courses {
     display: grid;
@@ -242,6 +242,12 @@ nav a:hover {
     padding: 35px;
     border-radius: 18px;
     border: 1px solid #e5e8ef;
+    transition: 0.3s;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(30, 40, 70, 0.08);
 }
 
 .course-number {
@@ -271,7 +277,7 @@ nav a:hover {
 }
 
 
-/* Content */
+/* ================= FILES ================= */
 
 .content-grid {
     display: grid;
@@ -284,6 +290,12 @@ nav a:hover {
     border: 1px solid #e5e8ef;
     border-radius: 16px;
     padding: 28px;
+    transition: 0.3s;
+}
+
+.file-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(30, 40, 70, 0.08);
 }
 
 .file-card h3 {
@@ -302,10 +314,15 @@ nav a:hover {
     background: #5b4bdb;
     color: white;
     font-weight: bold;
+    transition: 0.3s;
+}
+
+.download-btn:hover {
+    background: #4738c4;
 }
 
 
-/* Videos */
+/* ================= VIDEOS ================= */
 
 .video-grid {
     display: grid;
@@ -318,6 +335,12 @@ nav a:hover {
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid #e5e8ef;
+    transition: 0.3s;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(30, 40, 70, 0.08);
 }
 
 .video-frame {
@@ -352,7 +375,7 @@ nav a:hover {
 }
 
 
-/* Contact */
+/* ================= CONTACT ================= */
 
 .contact-section {
     text-align: center;
@@ -379,7 +402,7 @@ nav a:hover {
 }
 
 
-/* Footer */
+/* ================= FOOTER ================= */
 
 footer {
     background: #111827;
@@ -394,7 +417,7 @@ footer {
 }
 
 
-/* Mobile */
+/* ================= MOBILE ================= */
 
 @media (max-width: 850px) {
 
