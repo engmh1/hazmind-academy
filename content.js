@@ -74,8 +74,7 @@ const files = [
         description:
             "ملخص شامل لخطوات ومراحل إعداد البحث العلمي.",
 
-        file:
-            "files/ملخص البحث العلمي.pdf"
+       file: "summary.pdf"
     },
 
 
