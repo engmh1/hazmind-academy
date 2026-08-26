@@ -67,7 +67,7 @@ const videos = [
     {
         title: "الذكاء الاصطناعي في البحث العلمي",
         description: "كيفية استخدام الذكاء الاصطناعي في البحث العلمي.",
-        youtube: "https://www.youtube.com/watch?v=VIDEO_ID"
+        youtube: "https://youtu.be/TQTUjGj80LQ"
     }
 
 ];
