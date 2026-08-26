@@ -1,6 +1,9 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-    loadContent();
+
+    /* =========================
+       السنة
+    ========================== */
 
     const year = document.getElementById("year");
 
@@ -8,181 +11,263 @@ document.addEventListener("DOMContentLoaded", () => {
         year.textContent = new Date().getFullYear();
     }
 
-});
+
+    /* =========================
+       عرض الدورات
+    ========================== */
+
+    const coursesContainer =
+        document.getElementById("courses-container");
 
 
-async function loadContent() {
+    if (coursesContainer) {
 
-    try {
+        coursesContainer.innerHTML = "";
 
-        const response = await fetch("content.json");
 
-        if (!response.ok) {
-            throw new Error("Content file not found");
+        if (courses.length === 0) {
+
+            coursesContainer.innerHTML = `
+                <div class="loading">
+                    لا توجد دورات متاحة حاليًا.
+                </div>
+            `;
+
+        } else {
+
+            courses.forEach(function (course) {
+
+                let action = "";
+
+                if (course.link && course.link.trim() !== "") {
+
+                    action = `
+                        <a
+                            href="${course.link}"
+                            target="_blank"
+                            rel="noopener"
+                            class="btn primary">
+
+                            ${course.button || "الدخول إلى الدورة"}
+
+                        </a>
+                    `;
+
+                } else {
+
+                    action = `
+                        <span class="course-status">
+                            ${course.button || "قريبًا"}
+                        </span>
+                    `;
+
+                }
+
+
+                coursesContainer.innerHTML += `
+
+                    <div class="course-card">
+
+                        <div class="course-number">
+                            ${course.number}
+                        </div>
+
+                        <h3>
+                            ${course.title}
+                        </h3>
+
+                        <p>
+                            ${course.description}
+                        </p>
+
+                        ${action}
+
+                    </div>
+
+                `;
+
+            });
+
         }
 
-        const data = await response.json();
-
-        displayFiles(data.files || []);
-
-        displayVideos(data.videos || []);
-
-    } catch (error) {
-
-        console.error(error);
-
-        document.getElementById("files-container").innerHTML =
-            `<div class="loading">
-                لا توجد ملفات متاحة حاليًا.
-             </div>`;
-
-        document.getElementById("videos-container").innerHTML =
-            `<div class="loading">
-                لا توجد فيديوهات متاحة حاليًا.
-             </div>`;
-    }
-}
-
-
-function displayFiles(files) {
-
-    const container = document.getElementById("files-container");
-
-    if (!files.length) {
-
-        container.innerHTML =
-            `<div class="loading">
-                لا توجد ملفات متاحة حاليًا.
-             </div>`;
-
-        return;
     }
 
 
-    container.innerHTML = files.map(file => `
+    /* =========================
+       عرض ملفات PDF
+    ========================== */
 
-        <article class="file-card">
-
-            <h3>${escapeHTML(file.title)}</h3>
-
-            <p>
-                ${escapeHTML(file.description || "")}
-            </p>
-
-            <a
-                href="${escapeAttribute(file.url)}"
-                target="_blank"
-                class="download-btn">
-                تحميل PDF
-            </a>
-
-        </article>
-
-    `).join("");
-}
+    const filesContainer =
+        document.getElementById("files-container");
 
 
-function displayVideos(videos) {
+    if (filesContainer) {
 
-    const container = document.getElementById("videos-container");
+        filesContainer.innerHTML = "";
 
-    if (!videos.length) {
 
-        container.innerHTML =
-            `<div class="loading">
-                لا توجد فيديوهات متاحة حاليًا.
-             </div>`;
+        if (files.length === 0) {
 
-        return;
+            filesContainer.innerHTML = `
+                <div class="loading">
+                    لا توجد ملفات متاحة حاليًا.
+                </div>
+            `;
+
+        } else {
+
+            files.forEach(function (item) {
+
+                filesContainer.innerHTML += `
+
+                    <div class="file-card">
+
+                        <h3>
+                            ${item.title}
+                        </h3>
+
+                        <p>
+                            ${item.description}
+                        </p>
+
+                        <a
+                            href="${item.file}"
+                            target="_blank"
+                            rel="noopener"
+                            class="download-btn">
+
+                            تحميل PDF
+
+                        </a>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
     }
 
 
-    container.innerHTML = videos.map(video => {
+    /* =========================
+       تحويل رابط YouTube
+       إلى رابط Embed
+    ========================== */
 
-        const videoId = getYouTubeId(video.youtube);
+    function getYouTubeEmbedUrl(url) {
 
-        if (!videoId) {
+        try {
+
+            const parsedUrl = new URL(url);
+
+            let videoId = "";
+
+
+            /* youtube.com/watch?v= */
+
+            if (parsedUrl.hostname.includes("youtube.com")) {
+
+                videoId = parsedUrl.searchParams.get("v");
+
+            }
+
+
+            /* youtu.be/ */
+
+            if (parsedUrl.hostname === "youtu.be") {
+
+                videoId = parsedUrl.pathname.substring(1);
+
+            }
+
+
+            if (!videoId) {
+                return "";
+            }
+
+
+            return "https://www.youtube.com/embed/" + videoId;
+
+        } catch (error) {
+
             return "";
-        }
 
-        return `
-
-            <article class="video-card">
-
-                <div class="video-frame">
-
-                    <iframe
-                        src="https://www.youtube.com/embed/${videoId}"
-                        title="${escapeAttribute(video.title)}"
-                        allowfullscreen>
-                    </iframe>
-
-                </div>
-
-                <div class="video-info">
-
-                    <h3>
-                        ${escapeHTML(video.title)}
-                    </h3>
-
-                    <p>
-                        ${escapeHTML(video.description || "")}
-                    </p>
-
-                </div>
-
-            </article>
-
-        `;
-
-    }).join("");
-}
-
-
-function getYouTubeId(url) {
-
-    if (!url) {
-        return null;
-    }
-
-    const patterns = [
-
-        /youtube\.com\/watch\?v=([^&]+)/,
-
-        /youtu\.be\/([^?&]+)/,
-
-        /youtube\.com\/embed\/([^?&]+)/,
-
-        /youtube\.com\/shorts\/([^?&]+)/
-
-    ];
-
-    for (const pattern of patterns) {
-
-        const match = url.match(pattern);
-
-        if (match) {
-            return match[1];
         }
 
     }
 
-    return null;
-}
+
+    /* =========================
+       عرض فيديوهات YouTube
+    ========================== */
+
+    const videosContainer =
+        document.getElementById("videos-container");
 
 
-function escapeHTML(value) {
+    if (videosContainer) {
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
+        videosContainer.innerHTML = "";
 
 
-function escapeAttribute(value) {
+        if (videos.length === 0) {
 
-    return escapeHTML(value);
-}
+            videosContainer.innerHTML = `
+                <div class="loading">
+                    لا توجد فيديوهات متاحة حاليًا.
+                </div>
+            `;
+
+        } else {
+
+            videos.forEach(function (video) {
+
+                const embedUrl =
+                    getYouTubeEmbedUrl(video.youtube);
+
+
+                if (!embedUrl) {
+                    return;
+                }
+
+
+                videosContainer.innerHTML += `
+
+                    <div class="video-card">
+
+                        <div class="video-frame">
+
+                            <iframe
+                                src="${embedUrl}"
+                                title="${video.title}"
+                                loading="lazy"
+                                allowfullscreen>
+                            </iframe>
+
+                        </div>
+
+                        <div class="video-info">
+
+                            <h3>
+                                ${video.title}
+                            </h3>
+
+                            <p>
+                                ${video.description}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+    }
+
+});
