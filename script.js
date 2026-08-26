@@ -4,15 +4,18 @@
 ===================================================== */
 
 
-/* =========================
+/* =====================================================
    عرض الدورات
-========================= */
+===================================================== */
 
 function renderCourses() {
 
-    const container = document.getElementById("courses-container");
+    const container =
+        document.getElementById("courses-container");
+
 
     if (!container) return;
+
 
     if (!courses || courses.length === 0) {
 
@@ -22,45 +25,77 @@ function renderCourses() {
         return;
     }
 
-    container.innerHTML = courses.map(course => {
 
-        const button = course.link
-            ? `<a href="${course.link}" class="btn primary" target="_blank">${course.button || "الدخول إلى الدورة"}</a>`
-            : `<span class="course-status">${course.button || "قريبًا"}</span>`;
+    container.innerHTML =
+        courses.map(course => {
 
-        return `
-            <div class="course-card">
 
-                <div class="course-number">
-                    ${course.number}
+            const button = course.link
+
+                ? `
+                    <a
+                        href="${course.link}"
+                        class="btn primary"
+                        target="_blank"
+                        rel="noopener noreferrer">
+
+                        ${course.button || "الدخول إلى الدورة"}
+
+                    </a>
+                  `
+
+                : `
+                    <span class="course-status">
+
+                        ${course.button || "قريبًا"}
+
+                    </span>
+                  `;
+
+
+            return `
+
+                <div class="course-card">
+
+                    <div class="course-number">
+                        ${course.number}
+                    </div>
+
+
+                    <h3>
+                        ${course.title}
+                    </h3>
+
+
+                    <p>
+                        ${course.description}
+                    </p>
+
+
+                    ${button}
+
                 </div>
 
-                <h3>
-                    ${course.title}
-                </h3>
+            `;
 
-                <p>
-                    ${course.description}
-                </p>
+        }).join("");
 
-                ${button}
-
-            </div>
-        `;
-
-    }).join("");
 }
 
 
-/* =========================
+
+/* =====================================================
    عرض ملفات PDF
-========================= */
+===================================================== */
 
 function renderFiles() {
 
-    const container = document.getElementById("files-container");
+    const container =
+        document.getElementById("files-container");
+
 
     if (!container) return;
+
 
     if (!files || files.length === 0) {
 
@@ -70,94 +105,148 @@ function renderFiles() {
         return;
     }
 
-    container.innerHTML = files.map(file => {
 
-        return `
-            <div class="file-card">
+    container.innerHTML =
+        files.map(file => {
 
-                <div class="icon">
-                    PDF
+
+            return `
+
+                <div class="file-card">
+
+
+                    <div class="icon">
+                        PDF
+                    </div>
+
+
+                    <h3>
+                        ${file.title}
+                    </h3>
+
+
+                    <p>
+                        ${file.description}
+                    </p>
+
+
+                    <a
+                        href="${file.file}"
+                        class="download-btn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download>
+
+                        تحميل الملف
+
+                    </a>
+
+
                 </div>
 
-                <h3>
-                    ${file.title}
-                </h3>
+            `;
 
-                <p>
-                    ${file.description}
-                </p>
+        }).join("");
 
-                <a
-                    href="${encodeURI(file.file)}"
-                    class="download-btn"
-                    target="_blank"
-                    rel="noopener"
-                >
-                    تحميل الملف
-                </a>
-
-            </div>
-        `;
-
-    }).join("");
 }
 
 
-/* =========================
+
+/* =====================================================
    استخراج YouTube ID
-========================= */
+===================================================== */
 
 function getYouTubeID(url) {
 
     if (!url) return "";
 
-    let videoId = "";
 
     try {
 
-        const parsed = new URL(url);
+        const parsed =
+            new URL(url);
 
-        if (parsed.hostname.includes("youtu.be")) {
 
-            videoId = parsed.pathname.substring(1);
+        /* YouTube Shorts */
 
-        } else if (parsed.hostname.includes("youtube.com")) {
+        if (
+            parsed.hostname.includes("youtube.com") &&
+            parsed.pathname.includes("/shorts/")
+        ) {
 
-            videoId = parsed.searchParams.get("v") || "";
-
-            if (!videoId && parsed.pathname.includes("/shorts/")) {
-
-                videoId = parsed.pathname.split("/shorts/")[1];
-
-            }
-
-            if (!videoId && parsed.pathname.includes("/embed/")) {
-
-                videoId = parsed.pathname.split("/embed/")[1];
-
-            }
+            return parsed.pathname
+                .split("/shorts/")[1]
+                .split("/")[0];
 
         }
 
-    } catch (error) {
 
-        console.log("رابط YouTube غير صالح");
+        /* YouTube Embed */
+
+        if (
+            parsed.hostname.includes("youtube.com") &&
+            parsed.pathname.includes("/embed/")
+        ) {
+
+            return parsed.pathname
+                .split("/embed/")[1]
+                .split("/")[0];
+
+        }
+
+
+        /* YouTube Watch */
+
+        if (
+            parsed.hostname.includes("youtube.com")
+        ) {
+
+            return parsed.searchParams.get("v") || "";
+
+        }
+
+
+        /* youtu.be */
+
+        if (
+            parsed.hostname.includes("youtu.be")
+        ) {
+
+            return parsed.pathname
+                .substring(1)
+                .split("/")[0];
+
+        }
 
     }
 
-    return videoId;
+    catch (error) {
+
+        console.log(
+            "رابط YouTube غير صالح"
+        );
+
+    }
+
+
+    return "";
+
 }
 
 
-/* =========================
+
+/* =====================================================
    عرض فيديوهات YouTube
-========================= */
+===================================================== */
 
 function renderVideos() {
 
-    const container = document.getElementById("videos-container");
+    const container =
+        document.getElementById("videos-container");
+
 
     if (!container) return;
+
 
     if (!videos || videos.length === 0) {
 
@@ -167,14 +256,71 @@ function renderVideos() {
         return;
     }
 
-    container.innerHTML = videos.map(video => {
 
-        const videoId = getYouTubeID(video.youtube);
+    container.innerHTML =
+        videos.map(video => {
 
-        if (!videoId) {
+
+            const videoId =
+                getYouTubeID(video.youtube);
+
+
+            if (!videoId) {
+
+                return `
+
+                    <div class="video-card">
+
+                        <div class="video-info">
+
+                            <h3>
+                                ${video.title}
+                            </h3>
+
+                            <p>
+                                رابط الفيديو غير صالح.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
 
             return `
+
                 <div class="video-card">
+
+
+                    <div class="video-frame">
+
+                        <iframe
+
+                            src="https://www.youtube.com/embed/${videoId}"
+
+                            title="${video.title}"
+
+                            loading="lazy"
+
+                            allow="
+                                accelerometer;
+                                autoplay;
+                                clipboard-write;
+                                encrypted-media;
+                                gyroscope;
+                                picture-in-picture;
+                                web-share
+                            "
+
+                            allowfullscreen>
+
+                        </iframe>
+
+                    </div>
+
 
                     <div class="video-info">
 
@@ -182,85 +328,101 @@ function renderVideos() {
                             ${video.title}
                         </h3>
 
+
                         <p>
-                            رابط الفيديو غير صالح.
+                            ${video.description}
                         </p>
 
                     </div>
 
+
                 </div>
+
             `;
-        }
 
-        return `
-            <div class="video-card">
+        }).join("");
 
-                <div class="video-frame">
-
-                    <iframe
-                        src="https://www.youtube.com/embed/${videoId}"
-                        title="${video.title}"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-
-                </div>
-
-                <div class="video-info">
-
-                    <h3>
-                        ${video.title}
-                    </h3>
-
-                    <p>
-                        ${video.description}
-                    </p>
-
-                </div>
-
-            </div>
-        `;
-
-    }).join("");
 }
 
 
-/* =========================
+
+/* =====================================================
    الروابط الاجتماعية
-========================= */
+===================================================== */
 
 function renderSocialLinks() {
 
-    const youtube = document.getElementById("youtube-link");
+    const youtube =
+        document.getElementById("youtube-link");
 
-    const facebook = document.getElementById("facebook-link");
 
-    if (youtube && socialLinks.youtube) {
+    const facebook =
+        document.getElementById("facebook-link");
 
-        youtube.href = socialLinks.youtube;
+
+    if (
+        youtube &&
+        socialLinks.youtube
+    ) {
+
+        youtube.href =
+            socialLinks.youtube;
 
     }
 
-    if (facebook && socialLinks.facebook) {
 
-        facebook.href = socialLinks.facebook;
+    if (
+        facebook &&
+        socialLinks.facebook
+    ) {
+
+        facebook.href =
+            socialLinks.facebook;
 
     }
+
 }
 
 
-/* =========================
+
+/* =====================================================
+   السنة الحالية
+===================================================== */
+
+function renderYear() {
+
+    const year =
+        document.getElementById("year");
+
+
+    if (year) {
+
+        year.textContent =
+            new Date().getFullYear();
+
+    }
+
+}
+
+
+
+/* =====================================================
    تشغيل الموقع
-========================= */
+===================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    renderCourses();
+        renderCourses();
 
-    renderFiles();
+        renderFiles();
 
-    renderVideos();
+        renderVideos();
 
-    renderSocialLinks();
+        renderSocialLinks();
 
-});
+        renderYear();
+
+    }
+);
